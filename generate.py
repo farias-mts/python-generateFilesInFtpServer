@@ -2,8 +2,8 @@ import requests
 import random
 import json
 from ftplib import FTP
+import glob
 import os
-import fileinput
 import csv
 import time
 
@@ -54,33 +54,39 @@ def save(**args):
     write.writerow(fields_name) 
     write.writerows(args['data_people'])
     myfile = open(file.name, 'rb')
-    print(myfile)
-    print('STOR %s' % file.name, myfile)
     args['ftp'].storlines('STOR '+file.name, myfile)
-    print('uploaded')
     args['ftp'].dir()
 
 def connect_ftp_server(**args):
     ftp = FTP()
     ftp.connect(args['host'], int(args['port']))
     ftp.login(args['username'], args['password'])
-    ftp.cwd('/Matheus')
-    for i in range(1):
-        data_people = generate_people(number=3)
+    ftp.cwd('your directory path in FTP Server') #your directory path in FTP Server
+    count = 0
+    for i in range(5):
+        count+=1
+        data_people = generate_people(number=10)
         save(data_people=data_people, ftp=ftp)
+        print("{}° arquivo gerado".format(count))
     ftp.quit()
+    for file in glob.glob("*.csv"):
+        try:
+            os.remove(file)
+        except:
+            print('Não foi possivel remover o arquivo {}'.format(file))
         
 
-host = 'your host'
-port = 'your port'
+host = 'your host' #your host
+port = 'your port' #your port
 username = 'your user'
-password = 'your password'
+password = 'your pass'
 connect_ftp_server(
     host=host,
     port=port,
     username=username,
     password=password
 )
+
 
 
 
