@@ -78,18 +78,12 @@ def connect_ftp_server(**args):
             print('Não foi possivel remover o arquivo {}'.format(file))
         
 
-'''
 qtd_generate_file = 'Number of files to generate' #Quantity files generate
 host = 'your host' #your host
 port = 'your port' #your port
 username = 'your user' #your user
 password = 'your pass' #your pass
-'''
-qtd_generate_file = '5'
-host = '192.168.1.170'
-port = '21'
-username = 'po75'
-password = 'W193410s@'
+
 connect_ftp_server(
     host=host,
     port=port,
