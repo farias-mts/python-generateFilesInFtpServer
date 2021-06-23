@@ -71,10 +71,10 @@ def connect_ftp_server(**args):
     ftp.quit()
         
 
-host = '192.168.1.170'
-port = '21'
-username = 'po75'
-password = 'W193410s@'
+host = 'your host'
+port = 'your port'
+username = 'your user'
+password = 'your password'
 connect_ftp_server(
     host=host,
     port=port,
