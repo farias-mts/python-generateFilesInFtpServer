@@ -53,19 +53,21 @@ def save(**args):
     write = csv.writer(file, delimiter=";") 
     write.writerow(fields_name) 
     write.writerows(args['data_people'])
-    myfile = open(file.name, 'rb')
-    args['ftp'].storlines('STOR '+file.name, myfile)
+    file_name = file.name
+    file.close()
+    myfile = open(file_name, 'rb')
+    args['ftp'].storlines('STOR '+file_name, myfile)
     args['ftp'].dir()
 
 def connect_ftp_server(**args):
     ftp = FTP()
     ftp.connect(args['host'], int(args['port']))
     ftp.login(args['username'], args['password'])
-    ftp.cwd('your directory path in FTP Server') #your directory path in FTP Server
+    ftp.cwd('/Matheus/InterfacesTests/fileToFile') #your directory path in FTP Server
     count = 0
-    for i in range(5):
+    for i in range(int(args['qtd_file'])):
         count+=1
-        data_people = generate_people(number=10)
+        data_people = generate_people(number=15)
         save(data_people=data_people, ftp=ftp)
         print("{}° arquivo gerado".format(count))
     ftp.quit()
@@ -76,15 +78,24 @@ def connect_ftp_server(**args):
             print('Não foi possivel remover o arquivo {}'.format(file))
         
 
+'''
+qtd_generate_file = 'Number of files to generate' #Quantity files generate
 host = 'your host' #your host
 port = 'your port' #your port
-username = 'your user'
-password = 'your pass'
+username = 'your user' #your user
+password = 'your pass' #your pass
+'''
+qtd_generate_file = '5'
+host = '192.168.1.170'
+port = '21'
+username = 'po75'
+password = 'W193410s@'
 connect_ftp_server(
     host=host,
     port=port,
     username=username,
-    password=password
+    password=password,
+    qtd_file=qtd_generate_file,
 )
 
 
